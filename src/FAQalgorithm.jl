@@ -140,7 +140,7 @@ function faq(A::AbstractMatrix{U},B::AbstractMatrix{T};optimizer,max_iter::Int64
     P_i=init
     converged=false
     for _ in 1:max_iter
-        Q_i=_solve_transportation_problem(_gradient(A,B,P_i);optimizer=optimizer)
+        Q_i=_solve_assignment_problem(_gradient(A,B,P_i);optimizer=optimizer)
         α_i=_step_size(A,B,P_i,Q_i)
         P_new=_update_P(P_i,Q_i,α_i)
         converged=_check_convergence(_gradient(A,B,P_i),P_i,P_new;tol=tol)
