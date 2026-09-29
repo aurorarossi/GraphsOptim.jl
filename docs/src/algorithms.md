@@ -98,6 +98,24 @@ graph_matching
 GraphsOptim.graph_matching_step_size
 ```
 
+## Graph isomorphism
+
+```@docs
+graph_isomorphim
+```
+
+For adjacency matrices `A` and `B`, the mixed-integer formulation searches for a
+permutation matrix `X` satisfying
+
+```math
+A X = X B.
+```
+
+The row and column sums of `X` are constrained to one. Therefore, `X` describes
+a bijection between the vertices, and the matrix equality ensures that it
+preserves adjacency. For weighted graph types whose `adjacency_matrix` stores
+edge weights, the isomorphism preserves those weights too.
+
 ## Coloring
 
 ```@docs
