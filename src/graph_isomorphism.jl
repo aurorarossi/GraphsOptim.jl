@@ -1,4 +1,4 @@
-_graphs_not_isomorphic() = error("The graphs are not isomorphic")
+_graphs_not_isomorphic() = throw(ArgumentError("The graphs are not isomorphic"))
 
 """
     graph_isomorphim(g, h; optimizer=HiGHS.Optimizer)
@@ -10,6 +10,15 @@ The returned dictionary `f` preserves adjacency and, for graph types whose
 `adjacency_matrix` contains edge weights, preserves those weights as well. Both
 directed and undirected graphs are supported, but a directed graph is never
 considered isomorphic to an undirected graph.
+
+# Supported graph types
+
+- undirected graphs, such as `SimpleGraph`;
+- directed graphs, such as `SimpleDiGraph`;
+- weighted graphs, such as `SimpleWeightedGraph` and `SimpleWeightedDiGraph`.
+
+For weighted graphs, an isomorphism must preserve both adjacency and edge
+weights.
 
 # Keyword arguments
 
@@ -66,3 +75,5 @@ function graph_isomorphim(
 
     return Dict(i => findfirst(j -> value(X[i, j]) > 0.5, 1:n) for i in 1:n)
 end
+
+# Algorithm contributed by Ed Scheinerman.

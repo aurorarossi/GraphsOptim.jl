@@ -30,8 +30,8 @@ end
         add_edge!(two_triangles, triangle[2], triangle[3])
         add_edge!(two_triangles, triangle[3], triangle[1])
     end
-    @test_throws ErrorException graph_isomorphim(cycle_graph(6), two_triangles)
-    @test_throws ErrorException graph_isomorphim(path_graph(3), complete_graph(3))
+    @test_throws ArgumentError graph_isomorphim(cycle_graph(6), two_triangles)
+    @test_throws ArgumentError graph_isomorphim(path_graph(3), complete_graph(3))
 end
 
 @testset "Directed graphs" begin
@@ -44,7 +44,7 @@ end
     end
 
     @test is_isomorphism(g, h, graph_isomorphim(g, h))
-    @test_throws ErrorException graph_isomorphim(g, SimpleGraph(g))
+    @test_throws ArgumentError graph_isomorphim(g, SimpleGraph(g))
 end
 
 @testset "Weighted graphs" begin
@@ -65,5 +65,5 @@ end
     )
 
     add_edge!(h, permutation[1], permutation[2], 10.0)
-    @test_throws ErrorException graph_isomorphim(g, h)
+    @test_throws ArgumentError graph_isomorphim(g, h)
 end
