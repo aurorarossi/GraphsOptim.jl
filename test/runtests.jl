@@ -40,6 +40,10 @@ using Test
         include("graph_matching.jl")
     end
 
+    @testset verbose = true "Graph isomorphism" begin
+        include("graph_isomorphism.jl")
+    end
+
     @testset verbose = true "Vertex cover" begin
         include("min_vertex_cover.jl")
     end
