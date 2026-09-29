@@ -48,22 +48,19 @@ end
 end
 
 @testset "Weighted graphs" begin
-    g = SimpleWeightedGraph(4)
-    add_edge!(g, 1, 2, 1.5)
-    add_edge!(g, 2, 3, 2.5)
-    add_edge!(g, 3, 4, 4.5)
-
-    h = SimpleWeightedGraph(4)
+    A = [0.0 1.5 0.0 0.0; 1.5 0.0 2.5 0.0; 0.0 2.5 0.0 4.5; 0.0 0.0 4.5 0.0]
+    g = SimpleWeightedGraph(A)
     permutation = [3, 1, 4, 2]
-    for edge in edges(g)
-        add_edge!(h, permutation[src(edge)], permutation[dst(edge)], weight(edge))
-    end
+    B = zeros(4, 4)
+    B[permutation, permutation] = A
+    h = SimpleWeightedGraph(B)
 
     f = graph_isomorphim(g, h)
     @test all(
         weights(g)[u, v] == weights(h)[f[u], f[v]] for u in vertices(g) for v in vertices(g)
     )
 
-    add_edge!(h, permutation[1], permutation[2], 10.0)
-    @test_throws ArgumentError graph_isomorphim(g, h)
+    B[permutation[1], permutation[2]] = 10.0
+    B[permutation[2], permutation[1]] = 10.0
+    @test_throws ArgumentError graph_isomorphim(g, SimpleWeightedGraph(B))
 end
